@@ -1,0 +1,1287 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#111827">
+<title>معمل الخزرجي</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;
+ font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,Arial,sans-serif;
+ background:#f4f6f8;
+ color:#17202a;
+}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+.app{
+ max-width:700px;
+ margin:auto;
+ min-height:100vh;
+ background:#f4f6f8;
+}
+.header{
+ background:#111827;
+ color:white;
+ padding:22px 18px 18px;
+ position:sticky;
+ top:0;
+ z-index:20;
+ box-shadow:0 3px 15px #0002;
+}
+.header-top{
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+}
+.logo{
+ width:48px;
+ height:48px;
+ border-radius:14px;
+ background:#fff;
+ color:#111827;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ font-size:25px;
+ font-weight:900;
+}
+.title h1{margin:0;font-size:22px}
+.title p{margin:3px 0 0;color:#cbd5e1;font-size:13px}
+.menu-btn{
+ background:#1f2937;
+ color:#fff;
+ border:1px solid #374151;
+ width:44px;height:44px;
+ border-radius:12px;
+ font-size:22px;
+}
+.content{padding:18px}
+.page{display:none}
+.page.active{display:block}
+
+.hero{
+ background:linear-gradient(135deg,#111827,#334155);
+ color:white;
+ border-radius:22px;
+ padding:22px;
+ margin-bottom:16px;
+}
+.hero h2{margin:0 0 7px;font-size:24px}
+.hero p{margin:0;color:#dbe4ee}
+
+.stats{
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:12px;
+ margin-bottom:18px;
+}
+.stat{
+ background:white;
+ border-radius:18px;
+ padding:17px;
+ box-shadow:0 3px 12px #0000000b;
+}
+.stat .num{font-size:27px;font-weight:800}
+.stat .label{color:#64748b;font-size:13px;margin-top:4px}
+
+.grid{
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:12px;
+}
+.card-btn{
+ border:0;
+ background:white;
+ border-radius:18px;
+ padding:20px 10px;
+ box-shadow:0 3px 12px #0000000b;
+ color:#17202a;
+}
+.card-btn .icon{font-size:28px;margin-bottom:8px}
+.card-btn b{display:block}
+
+.section-title{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ margin:5px 0 14px;
+}
+.section-title h2{margin:0;font-size:20px}
+
+.primary{
+ background:#111827;
+ color:white;
+ border:0;
+ border-radius:12px;
+ padding:12px 18px;
+ font-weight:700;
+}
+.secondary{
+ background:white;
+ color:#111827;
+ border:1px solid #d7dde5;
+ border-radius:12px;
+ padding:11px 15px;
+}
+.danger{
+ background:#fee2e2;
+ color:#b91c1c;
+ border:0;
+ border-radius:10px;
+ padding:8px 11px;
+}
+
+.form-card{
+ background:white;
+ border-radius:20px;
+ padding:18px;
+ box-shadow:0 3px 12px #0000000b;
+ margin-bottom:15px;
+}
+.field{margin-bottom:13px}
+.field label{
+ display:block;
+ font-size:13px;
+ font-weight:700;
+ margin-bottom:6px;
+ color:#475569;
+}
+.field input,
+.field select,
+.field textarea{
+ width:100%;
+ border:1px solid #d7dde5;
+ background:#fff;
+ border-radius:12px;
+ padding:12px;
+ outline:none;
+}
+.field textarea{min-height:90px;resize:vertical}
+
+.search{
+ width:100%;
+ padding:13px 15px;
+ border:1px solid #d7dde5;
+ border-radius:13px;
+ margin-bottom:13px;
+ background:white;
+}
+
+.item{
+ background:white;
+ border-radius:17px;
+ padding:15px;
+ margin-bottom:10px;
+ box-shadow:0 3px 10px #00000008;
+}
+.item-top{
+ display:flex;
+ justify-content:space-between;
+ gap:10px;
+}
+.item h3{margin:0 0 5px;font-size:16px}
+.item p{margin:4px 0;color:#64748b;font-size:13px}
+.badge{
+ display:inline-block;
+ border-radius:20px;
+ padding:5px 9px;
+ background:#e2e8f0;
+ color:#334155;
+ font-size:11px;
+ font-weight:700;
+}
+.badge.green{background:#dcfce7;color:#166534}
+.badge.orange{background:#ffedd5;color:#9a3412}
+.badge.red{background:#fee2e2;color:#991b1b}
+
+.bottom{
+ position:sticky;
+ bottom:0;
+ background:white;
+ border-top:1px solid #e2e8f0;
+ display:grid;
+ grid-template-columns:repeat(5,1fr);
+ padding:8px 5px calc(8px + env(safe-area-inset-bottom));
+ z-index:30;
+}
+.nav{
+ border:0;
+ background:none;
+ color:#64748b;
+ padding:5px 2px;
+ font-size:11px;
+}
+.nav .ni{font-size:21px;display:block;margin-bottom:3px}
+.nav.active{color:#111827;font-weight:800}
+
+.modal{
+ position:fixed;
+ inset:0;
+ background:#0008;
+ z-index:100;
+ display:none;
+ align-items:flex-end;
+}
+.modal.show{display:flex}
+.modal-box{
+ background:white;
+ width:100%;
+ max-width:700px;
+ margin:auto;
+ border-radius:24px 24px 0 0;
+ padding:20px;
+ max-height:90vh;
+ overflow:auto;
+}
+.modal-head{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ margin-bottom:15px;
+}
+.close{
+ border:0;
+ background:#eef2f7;
+ width:40px;height:40px;
+ border-radius:50%;
+}
+
+.empty{
+ text-align:center;
+ padding:35px 15px;
+ color:#64748b;
+}
+
+.toast{
+ position:fixed;
+ left:50%;
+ bottom:90px;
+ transform:translateX(-50%);
+ background:#111827;
+ color:white;
+ padding:12px 18px;
+ border-radius:12px;
+ z-index:200;
+ display:none;
+}
+.toast.show{display:block}
+
+.menu-panel{
+ position:fixed;
+ top:0;
+ right:0;
+ width:280px;
+ height:100%;
+ background:white;
+ z-index:80;
+ transform:translateX(100%);
+ transition:.25s;
+ padding:25px 18px;
+ box-shadow:-5px 0 20px #0002;
+}
+.menu-panel.open{transform:translateX(0)}
+.menu-panel h2{margin-top:5px}
+.menu-item{
+ width:100%;
+ text-align:right;
+ border:0;
+ background:white;
+ padding:15px 5px;
+ border-bottom:1px solid #eef2f7;
+}
+
+.overlay{
+ position:fixed;
+ inset:0;
+ background:#0005;
+ z-index:70;
+ display:none;
+}
+.overlay.show{display:block}
+
+@media(min-width:650px){
+ .stats{grid-template-columns:repeat(4,1fr)}
+ .grid{grid-template-columns:repeat(4,1fr)}
+ .bottom{border-radius:18px;margin:0 10px 10px}
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<header class="header">
+ <div class="header-top">
+  <button class="menu-btn" onclick="openMenu()">☰</button>
+
+  <div class="title">
+   <h1>معمل الخزرجي</h1>
+   <p>نظام إدارة المعمل</p>
+  </div>
+
+  <div class="logo">خ</div>
+ </div>
+</header>
+
+<main class="content">
+
+<!-- الرئيسية -->
+<section id="home" class="page active">
+
+ <div class="hero">
+  <h2>مرحباً بك 👋</h2>
+  <p>إدارة الفساتين والطلبات والمصروفات من مكان واحد.</p>
+ </div>
+
+ <div class="stats">
+  <div class="stat">
+   <div class="num" id="statDresses">0</div>
+   <div class="label">الفساتين</div>
+  </div>
+
+  <div class="stat">
+   <div class="num" id="statOrders">0</div>
+   <div class="label">الطلبات</div>
+  </div>
+
+  <div class="stat">
+   <div class="num" id="statCustomers">0</div>
+   <div class="label">الزبائن</div>
+  </div>
+
+  <div class="stat">
+   <div class="num" id="statExpenses">0</div>
+   <div class="label">المصروفات</div>
+  </div>
+ </div>
+
+ <div class="section-title">
+  <h2>الوصول السريع</h2>
+ </div>
+
+ <div class="grid">
+  <button class="card-btn" onclick="showPage('dresses')">
+   <div class="icon">👗</div><b>الفساتين</b>
+  </button>
+
+  <button class="card-btn" onclick="showPage('orders')">
+   <div class="icon">🧾</div><b>الطلبات</b>
+  </button>
+
+  <button class="card-btn" onclick="showPage('customers')">
+   <div class="icon">👥</div><b>الزبائن</b>
+  </button>
+
+  <button class="card-btn" onclick="showPage('expenses')">
+   <div class="icon">💰</div><b>المصروفات</b>
+  </button>
+
+  <button class="card-btn" onclick="showPage('reports')">
+   <div class="icon">📊</div><b>التقارير</b>
+  </button>
+
+  <button class="card-btn" onclick="showPage('backup')">
+   <div class="icon">💾</div><b>النسخ الاحتياطي</b>
+  </button>
+ </div>
+
+</section>
+
+
+<!-- الفساتين -->
+<section id="dresses" class="page">
+
+ <div class="section-title">
+  <h2>الفساتين</h2>
+  <button class="primary" onclick="openDressForm()">+ إضافة</button>
+ </div>
+
+ <input class="search" id="dressSearch"
+  placeholder="🔎 البحث عن فستان..."
+  oninput="renderDresses()">
+
+ <div id="dressList"></div>
+
+</section>
+
+
+<!-- الطلبات -->
+<section id="orders" class="page">
+
+ <div class="section-title">
+  <h2>الطلبات</h2>
+  <button class="primary" onclick="openOrderForm()">+ إضافة</button>
+ </div>
+
+ <input class="search" id="orderSearch"
+  placeholder="🔎 البحث في الطلبات..."
+  oninput="renderOrders">
+
+ <div id="orderList"></div>
+
+</section>
+
+
+<!-- الزبائن -->
+<section id="customers" class="page">
+
+ <div class="section-title">
+  <h2>الزبائن</h2>
+  <button class="primary" onclick="openCustomerForm()">+ إضافة</button>
+ </div>
+
+ <input class="search" id="customerSearch"
+  placeholder="🔎 البحث عن زبون..."
+  oninput="renderCustomers()">
+
+ <div id="customerList"></div>
+
+</section>
+
+
+<!-- المصروفات -->
+<section id="expenses" class="page">
+
+ <div class="section-title">
+  <h2>المصروفات</h2>
+  <button class="primary" onclick="openExpenseForm()">+ إضافة</button>
+ </div>
+
+ <div class="form-card">
+  <b>إجمالي المصروفات</b>
+  <div style="font-size:28px;font-weight:800;margin-top:8px">
+   <span id="expenseTotal">0</span> د.ع
+  </div>
+ </div>
+
+ <div id="expenseList"></div>
+
+</section>
+
+
+<!-- التقارير -->
+<section id="reports" class="page">
+
+ <div class="section-title">
+  <h2>التقارير</h2>
+ </div>
+
+ <div class="form-card">
+  <h3>ملخص النظام</h3>
+
+  <p>عدد الفساتين:
+   <b id="reportDresses">0</b>
+  </p>
+
+  <p>عدد الطلبات:
+   <b id="reportOrders">0</b>
+  </p>
+
+  <p>عدد الزبائن:
+   <b id="reportCustomers">0</b>
+  </p>
+
+  <p>إجمالي المصروفات:
+   <b id="reportExpenses">0</b> د.ع
+  </p>
+
+  <hr>
+
+  <p>
+   <b>إيرادات الطلبات:</b>
+   <span id="reportRevenue">0</span> د.ع
+  </p>
+
+  <p>
+   <b>الصافي التقريبي:</b>
+   <span id="reportNet">0</span> د.ع
+  </p>
+ </div>
+
+</section>
+
+
+<!-- النسخ الاحتياطي -->
+<section id="backup" class="page">
+
+ <div class="section-title">
+  <h2>النسخ الاحتياطي</h2>
+ </div>
+
+ <div class="form-card">
+  <h3>حفظ نسخة من بيانات النظام</h3>
+  <p style="color:#64748b">
+   يمكنك تنزيل نسخة من جميع البيانات الموجودة على الهاتف.
+  </p>
+
+  <button class="primary" onclick="exportData()">
+   ⬇️ تنزيل النسخة الاحتياطية
+  </button>
+ </div>
+
+ <div class="form-card">
+  <h3>استعادة نسخة</h3>
+  <p style="color:#64748b">
+   اختر ملف النسخة الاحتياطية لاستعادة البيانات.
+  </p>
+
+  <input type="file"
+   id="restoreFile"
+   accept=".json"
+   onchange="restoreData(event)">
+ </div>
+
+ <div class="form-card">
+  <h3>حذف كل البيانات</h3>
+  <p style="color:#64748b">
+   استخدم هذا الخيار بحذر.
+  </p>
+
+  <button class="danger" onclick="clearAllData()">
+   حذف جميع البيانات
+  </button>
+ </div>
+
+</section>
+
+</main>
+
+
+<!-- شريط التنقل -->
+<nav class="bottom">
+
+ <button class="nav active" data-page="home"
+ onclick="showPage('home')">
+  <span class="ni">⌂</span>الرئيسية
+ </button>
+
+ <button class="nav" data-page="dresses"
+ onclick="showPage('dresses')">
+  <span class="ni">👗</span>الفساتين
+ </button>
+
+ <button class="nav" data-page="orders"
+ onclick="showPage('orders')">
+  <span class="ni">🧾</span>الطلبات
+ </button>
+
+ <button class="nav" data-page="customers"
+ onclick="showPage('customers')">
+  <span class="ni">👥</span>الزبائن
+ </button>
+
+ <button class="nav" data-page="reports"
+ onclick="showPage('reports')">
+  <span class="ni">📊</span>التقارير
+ </button>
+
+</nav>
+
+</div>
+
+
+<!-- القائمة الجانبية -->
+<div id="overlay" class="overlay" onclick="closeMenu()"></div>
+
+<aside id="menuPanel" class="menu-panel">
+
+ <button class="close" onclick="closeMenu()">✕</button>
+
+ <h2>معمل الخزرجي</h2>
+
+ <button class="menu-item" onclick="showPage('home');closeMenu()">
+  🏠 الرئيسية
+ </button>
+
+ <button class="menu-item" onclick="showPage('dresses');closeMenu()">
+  👗 الفساتين
+ </button>
+
+ <button class="menu-item" onclick="showPage('orders');closeMenu()">
+  🧾 الطلبات
+ </button>
+
+ <button class="menu-item" onclick="showPage('customers');closeMenu()">
+  👥 الزبائن
+ </button>
+
+ <button class="menu-item" onclick="showPage('expenses');closeMenu()">
+  💰 المصروفات
+ </button>
+
+ <button class="menu-item" onclick="showPage('reports');closeMenu()">
+  📊 التقارير
+ </button>
+
+ <button class="menu-item" onclick="showPage('backup');closeMenu()">
+  💾 النسخ الاحتياطي
+ </button>
+
+</aside>
+
+
+<!-- Modal -->
+<div id="modal" class="modal">
+
+ <div class="modal-box">
+
+  <div class="modal-head">
+   <h2 id="modalTitle">إضافة</h2>
+   <button class="close" onclick="closeModal()">✕</button>
+  </div>
+
+  <div id="modalContent"></div>
+
+ </div>
+
+</div>
+
+<div id="toast" class="toast"></div>
+
+
+<script>
+
+const DB_KEY="ALKAZRAJI_FACTORY_DB_V1";
+
+let db={
+ dresses:[],
+ orders:[],
+ customers:[],
+ expenses:[]
+};
+
+function loadDB(){
+ try{
+  const saved=localStorage.getItem(DB_KEY);
+  if(saved) db=JSON.parse(saved);
+ }catch(e){
+  console.log(e);
+ }
+}
+
+function saveDB(){
+ localStorage.setItem(DB_KEY,JSON.stringify(db));
+ updateStats();
+}
+
+function id(){
+ return Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+}
+
+function money(n){
+ return Number(n||0).toLocaleString("ar-IQ");
+}
+
+function toast(msg){
+ const t=document.getElementById("toast");
+ t.textContent=msg;
+ t.classList.add("show");
+ setTimeout(()=>t.classList.remove("show"),2200);
+}
+
+function showPage(page){
+
+ document.querySelectorAll(".page")
+ .forEach(x=>x.classList.remove("active"));
+
+ document.getElementById(page)
+ .classList.add("active");
+
+ document.querySelectorAll(".nav")
+ .forEach(x=>x.classList.remove("active"));
+
+ const nav=document.querySelector(`[data-page="${page}"]`);
+ if(nav) nav.classList.add("active");
+
+ if(page==="home") updateStats();
+ if(page==="dresses") renderDresses();
+ if(page==="orders") renderOrders();
+ if(page==="customers") renderCustomers();
+ if(page==="expenses") renderExpenses();
+ if(page==="reports") renderReports();
+ if(page==="backup") updateStats();
+
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function updateStats(){
+
+ document.getElementById("statDresses").textContent=db.dresses.length;
+ document.getElementById("statOrders").textContent=db.orders.length;
+ document.getElementById("statCustomers").textContent=db.customers.length;
+
+ const total=db.expenses.reduce((a,b)=>a+Number(b.amount||0),0);
+
+ document.getElementById("statExpenses").textContent=money(total);
+
+}
+
+function openMenu(){
+ document.getElementById("menuPanel").classList.add("open");
+ document.getElementById("overlay").classList.add("show");
+}
+
+function closeMenu(){
+ document.getElementById("menuPanel").classList.remove("open");
+ document.getElementById("overlay").classList.remove("show");
+}
+
+function openModal(title,html){
+ document.getElementById("modalTitle").textContent=title;
+ document.getElementById("modalContent").innerHTML=html;
+ document.getElementById("modal").classList.add("show");
+}
+
+function closeModal(){
+ document.getElementById("modal").classList.remove("show");
+}
+
+
+/* الفساتين */
+
+function openDressForm(){
+
+ openModal("إضافة فستان",`
+
+ <div class="field">
+  <label>اسم / كود الفستان</label>
+  <input id="fName" placeholder="مثال: F-001">
+ </div>
+
+ <div class="field">
+  <label>اللون</label>
+  <input id="fColor" placeholder="مثال: أسود">
+ </div>
+
+ <div class="field">
+  <label>المقاس</label>
+  <input id="fSize" placeholder="مثال: 38-48">
+ </div>
+
+ <div class="field">
+  <label>سعر البيع</label>
+  <input id="fPrice" type="number" placeholder="بالدينار العراقي">
+ </div>
+
+ <div class="field">
+  <label>الكمية</label>
+  <input id="fQty" type="number" value="1">
+ </div>
+
+ <div class="field">
+  <label>ملاحظات</label>
+  <textarea id="fNote"></textarea>
+ </div>
+
+ <button class="primary" onclick="addDress()">
+  حفظ الفستان
+ </button>
+ `);
+}
+
+function addDress(){
+
+ const name=document.getElementById("fName").value.trim();
+
+ if(!name){
+  toast("اكتب اسم أو كود الفستان");
+  return;
+ }
+
+ db.dresses.push({
+  id:id(),
+  name,
+  color:document.getElementById("fColor").value,
+  size:document.getElementById("fSize").value,
+  price:Number(document.getElementById("fPrice").value||0),
+  qty:Number(document.getElementById("fQty").value||1),
+  note:document.getElementById("fNote").value,
+  date:new Date().toISOString()
+ });
+
+ saveDB();
+ closeModal();
+ renderDresses();
+ toast("تمت إضافة الفستان");
+}
+
+function deleteDress(i){
+
+ if(!confirm("هل تريد حذف هذا الفستان؟")) return;
+
+ db.dresses.splice(i,1);
+ saveDB();
+ renderDresses();
+ toast("تم الحذف");
+}
+
+function renderDresses(){
+
+ const box=document.getElementById("dressList");
+ const q=(document.getElementById("dressSearch")?.value||"").toLowerCase();
+
+ const arr=db.dresses.filter(x=>
+  (x.name+" "+x.color+" "+x.size).toLowerCase().includes(q)
+ );
+
+ if(!arr.length){
+  box.innerHTML=`<div class="empty">👗<br><br>لا توجد فساتين بعد.</div>`;
+  return;
+ }
+
+ box.innerHTML=arr.map((x)=>{
+  const realIndex=db.dresses.indexOf(x);
+
+  return `
+  <div class="item">
+   <div class="item-top">
+    <div>
+     <h3>👗 ${x.name}</h3>
+     <p>اللون: ${x.color||"-"} | المقاس: ${x.size||"-"}</p>
+     <p>السعر: <b>${money(x.price)} د.ع</b></p>
+     <p>الكمية: ${x.qty}</p>
+    </div>
+    <button class="danger" onclick="deleteDress(${realIndex})">حذف</button>
+   </div>
+  </div>
+  `;
+ }).join("");
+}
+
+
+/* الزبائن */
+
+function openCustomerForm(){
+
+ openModal("إضافة زبون",`
+
+ <div class="field">
+  <label>اسم الزبون</label>
+  <input id="cName">
+ </div>
+
+ <div class="field">
+  <label>رقم الهاتف</label>
+  <input id="cPhone" type="tel">
+ </div>
+
+ <div class="field">
+  <label>ملاحظات</label>
+  <textarea id="cNote"></textarea>
+ </div>
+
+ <button class="primary" onclick="addCustomer()">
+  حفظ الزبون
+ </button>
+ `);
+}
+
+function addCustomer(){
+
+ const name=document.getElementById("cName").value.trim();
+
+ if(!name){
+  toast("اكتب اسم الزبون");
+  return;
+ }
+
+ db.customers.push({
+  id:id(),
+  name,
+  phone:document.getElementById("cPhone").value,
+  note:document.getElementById("cNote").value
+ });
+
+ saveDB();
+ closeModal();
+ renderCustomers();
+ toast("تمت إضافة الزبون");
+}
+
+function deleteCustomer(i){
+
+ if(!confirm("حذف الزبون؟"))return;
+
+ db.customers.splice(i,1);
+ saveDB();
+ renderCustomers();
+}
+
+function renderCustomers(){
+
+ const box=document.getElementById("customerList");
+ const q=(document.getElementById("customerSearch")?.value||"").toLowerCase();
+
+ const arr=db.customers.filter(x=>
+  (x.name+" "+x.phone).toLowerCase().includes(q)
+ );
+
+ if(!arr.length){
+  box.innerHTML=`<div class="empty">👥<br><br>لا يوجد زبائن بعد.</div>`;
+  return;
+ }
+
+ box.innerHTML=arr.map(x=>{
+
+  const i=db.customers.indexOf(x);
+
+  return `
+  <div class="item">
+   <div class="item-top">
+    <div>
+     <h3>👤 ${x.name}</h3>
+     <p>📞 ${x.phone||"لا يوجد رقم"}</p>
+     ${x.note?`<p>${x.note}</p>`:""}
+    </div>
+    <button class="danger" onclick="deleteCustomer(${i})">حذف</button>
+   </div>
+  </div>
+  `;
+ }).join("");
+}
+
+
+/* الطلبات */
+
+function openOrderForm(){
+
+ const customers=db.customers;
+
+ const options=customers.map(x=>
+ `<option value="${x.id}">${x.name}</option>`
+ ).join("");
+
+ openModal("إضافة طلب",`
+
+ <div class="field">
+  <label>الزبون</label>
+  <select id="oCustomer">
+   <option value="">اختر الزبون</option>
+   ${options}
+  </select>
+ </div>
+
+ <div class="field">
+  <label>اسم / كود الفستان</label>
+  <input id="oDress">
+ </div>
+
+ <div class="field">
+  <label>المبلغ</label>
+  <input id="oAmount" type="number">
+ </div>
+
+ <div class="field">
+  <label>الحالة</label>
+  <select id="oStatus">
+   <option>جديد</option>
+   <option>قيد التجهيز</option>
+   <option>جاهز</option>
+   <option>تم التسليم</option>
+   <option>ملغي</option>
+  </select>
+ </div>
+
+ <div class="field">
+  <label>ملاحظات</label>
+  <textarea id="oNote"></textarea>
+ </div>
+
+ <button class="primary" onclick="addOrder()">
+  حفظ الطلب
+ </button>
+ `);
+}
+
+function addOrder(){
+
+ const dress=document.getElementById("oDress").value.trim();
+
+ if(!dress){
+  toast("اكتب اسم أو كود الفستان");
+  return;
+ }
+
+ const customerId=document.getElementById("oCustomer").value;
+
+ const customer=db.customers.find(x=>x.id===customerId);
+
+ db.orders.push({
+  id:id(),
+  customer:customer?customer.name:"بدون زبون",
+  dress,
+  amount:Number(document.getElementById("oAmount").value||0),
+  status:document.getElementById("oStatus").value,
+  note:document.getElementById("oNote").value,
+  date:new Date().toISOString()
+ });
+
+ saveDB();
+ closeModal();
+ renderOrders();
+ toast("تم حفظ الطلب");
+}
+
+function deleteOrder(i){
+
+ if(!confirm("حذف الطلب؟"))return;
+
+ db.orders.splice(i,1);
+ saveDB();
+ renderOrders();
+}
+
+function renderOrders(){
+
+ const box=document.getElementById("orderList");
+ const q=(document.getElementById("orderSearch")?.value||"").toLowerCase();
+
+ const arr=db.orders.filter(x=>
+  (x.customer+" "+x.dress+" "+x.status).toLowerCase().includes(q)
+ );
+
+ if(!arr.length){
+  box.innerHTML=`<div class="empty">🧾<br><br>لا توجد طلبات بعد.</div>`;
+  return;
+ }
+
+ box.innerHTML=arr.slice().reverse().map(x=>{
+
+  const i=db.orders.indexOf(x);
+
+  let cls="";
+  if(x.status==="تم التسليم")cls="green";
+  if(x.status==="ملغي")cls="red";
+  if(x.status==="قيد التجهيز")cls="orange";
+
+  return `
+  <div class="item">
+   <div class="item-top">
+    <div>
+     <h3>🧾 ${x.dress}</h3>
+     <p>الزبون: ${x.customer}</p>
+     <p>المبلغ: <b>${money(x.amount)} د.ع</b></p>
+     <span class="badge ${cls}">${x.status}</span>
+    </div>
+    <button class="danger" onclick="deleteOrder(${i})">حذف</button>
+   </div>
+  </div>
+  `;
+ }).join("");
+}
+
+
+/* المصروفات */
+
+function openExpenseForm(){
+
+ openModal("إضافة مصروف",`
+
+ <div class="field">
+  <label>نوع المصروف</label>
+  <input id="eName" placeholder="مثال: قماش">
+ </div>
+
+ <div class="field">
+  <label>المبلغ</label>
+  <input id="eAmount" type="number">
+ </div>
+
+ <div class="field">
+  <label>ملاحظات</label>
+  <textarea id="eNote"></textarea>
+ </div>
+
+ <button class="primary" onclick="addExpense()">
+  حفظ المصروف
+ </button>
+ `);
+}
+
+function addExpense(){
+
+ const name=document.getElementById("eName").value.trim();
+ const amount=Number(document.getElementById("eAmount").value||0);
+
+ if(!name || !amount){
+  toast("أدخل نوع المصروف والمبلغ");
+  return;
+ }
+
+ db.expenses.push({
+  id:id(),
+  name,
+  amount,
+  note:document.getElementById("eNote").value,
+  date:new Date().toISOString()
+ });
+
+ saveDB();
+ closeModal();
+ renderExpenses();
+ toast("تم حفظ المصروف");
+}
+
+function deleteExpense(i){
+
+ if(!confirm("حذف المصروف؟"))return;
+
+ db.expenses.splice(i,1);
+ saveDB();
+ renderExpenses();
+}
+
+function renderExpenses(){
+
+ const box=document.getElementById("expenseList");
+
+ const total=db.expenses.reduce((a,b)=>a+Number(b.amount||0),0);
+
+ document.getElementById("expenseTotal").textContent=money(total);
+
+ if(!db.expenses.length){
+  box.innerHTML=`<div class="empty">💰<br><br>لا توجد مصروفات.</div>`;
+  return;
+ }
+
+ box.innerHTML=db.expenses.slice().reverse().map(x=>{
+
+  const i=db.expenses.indexOf(x);
+
+  return `
+  <div class="item">
+   <div class="item-top">
+    <div>
+     <h3>💸 ${x.name}</h3>
+     <p>المبلغ: <b>${money(x.amount)} د.ع</b></p>
+     ${x.note?`<p>${x.note}</p>`:""}
+    </div>
+    <button class="danger" onclick="deleteExpense(${i})">حذف</button>
+   </div>
+  </div>
+  `;
+ }).join("");
+}
+
+
+/* التقارير */
+
+function renderReports(){
+
+ const expenses=db.expenses.reduce((a,b)=>a+Number(b.amount||0),0);
+ const revenue=db.orders
+  .filter(x=>x.status!=="ملغي")
+  .reduce((a,b)=>a+Number(b.amount||0),0);
+
+ document.getElementById("reportDresses").textContent=db.dresses.length;
+ document.getElementById("reportOrders").textContent=db.orders.length;
+ document.getElementById("reportCustomers").textContent=db.customers.length;
+ document.getElementById("reportExpenses").textContent=money(expenses);
+ document.getElementById("reportRevenue").textContent=money(revenue);
+ document.getElementById("reportNet").textContent=money(revenue-expenses);
+}
+
+
+/* النسخ الاحتياطي */
+
+function exportData(){
+
+ const data={
+  ...db,
+  exportedAt:new Date().toISOString(),
+  system:"معمل الخزرجي"
+ };
+
+ const blob=new Blob(
+  [JSON.stringify(data,null,2)],
+  {type:"application/json"}
+ );
+
+ const url=URL.createObjectURL(blob);
+
+ const a=document.createElement("a");
+ a.href=url;
+ a.download="alkazraji-factory-backup.json";
+ a.click();
+
+ URL.revokeObjectURL(url);
+
+ toast("تم إنشاء النسخة الاحتياطية");
+}
+
+function restoreData(event){
+
+ const file=event.target.files[0];
+
+ if(!file)return;
+
+ const reader=new FileReader();
+
+ reader.onload=function(e){
+
+  try{
+
+   const data=JSON.parse(e.target.result);
+
+   db={
+    dresses:Array.isArray(data.dresses)?data.dresses:[],
+    orders:Array.isArray(data.orders)?data.orders:[],
+    customers:Array.isArray(data.customers)?data.customers:[],
+    expenses:Array.isArray(data.expenses)?data.expenses:[]
+   };
+
+   saveDB();
+   updateStats();
+   toast("تمت استعادة البيانات");
+
+  }catch(err){
+
+   alert("ملف النسخة الاحتياطية غير صالح");
+
+  }
+
+ };
+
+ reader.readAsText(file);
+}
+
+function clearAllData(){
+
+ if(!confirm("سيتم حذف جميع بيانات النظام. هل أنت متأكد؟"))
+  return;
+
+ if(!confirm("تأكيد نهائي: حذف كل البيانات؟"))
+  return;
+
+ db={
+  dresses:[],
+  orders:[],
+  customers:[],
+  expenses:[]
+ };
+
+ saveDB();
+
+ renderDresses();
+ renderOrders();
+ renderCustomers();
+ renderExpenses();
+ renderReports();
+
+ toast("تم حذف البيانات");
+}
+
+
+/* تشغيل */
+
+loadDB();
+updateStats();
+
+</script>
+
+</body>
+</html>
